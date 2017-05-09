@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    portfolio
+{% endblock %}
+{% block user %}
+  hello,  {{ user if user}}
+{% endblock %}
+{% block main %}
+<table class="table table-striped">
+<thead>
+    <tr>
+        <th>Symbol</th>
+        <th> Name</th>
+        <th>Shares</th>
+        <th> Price</th>
+        <th>TOTAL</th>
+    </tr>
+</thead>    
+    <tfoot>
+        <tr>
+            <td colspan="4"></td>
+            <td>{{(summ + cash if summ else cash) | usd}}</td>
+        </tr>
+    </tfoot>
+    {% if rows %}
+    {% for row, price in rows %}
+    <tr>
+        <td>
+          {{row["symbol"]}}  
+        </td>
+        <td>
+            {{row["name"]}}
+        </td>
+        <td>
+            {{row["shares"]}}
+        </td>
+        <td>
+            {{price}}
+        </td>
+        <td>
+            {{(row["shares"] * price) | usd}}
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+    <tr>
+        <td colspan="4">CASH</td>
+        <td>{{ cash | usd }}</td>
+    </tr>
+</table>
+
+{% endblock %}
